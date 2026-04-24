@@ -3,7 +3,7 @@ import { lessons, Lesson, Question } from "./data/questions";
 import { shuffleArray, cn } from "./lib/utils";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, XCircle, ArrowRight, Home, RefreshCw, Trophy, Layers, GraduationCap, ArrowRightCircle } from "lucide-react";
+import { CheckCircle2, XCircle, ArrowRight, Home, RefreshCw, Trophy, Layers, GraduationCap, ArrowRightCircle, Volume2, VolumeX } from "lucide-react";
 
 type ViewState = "MENU" | "QUIZ" | "MILESTONE" | "RESULT";
 
@@ -21,6 +21,7 @@ const allQuestions = lessons.flatMap(l => l.questions);
 export default function App() {
   const [view, setView] = useState<ViewState>("MENU");
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+  const [isPlayingMusic, setIsPlayingMusic] = useState(false);
 
   // Quiz state
   const [currentQuestions, setCurrentQuestions] = useState<Question[]>([]);
@@ -31,6 +32,22 @@ export default function App() {
   const [answers, setAnswers] = useState<Record<string, number>>({}); // questionId -> selected originalIndex
   const [showFeedback, setShowFeedback] = useState(false);
   const [relaxImg, setRelaxImg] = useState(relaxingImages[0]);
+
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+
+  // Handle global background music
+  useEffect(() => {
+    if (audioRef.current) {
+        if (isPlayingMusic) {
+            audioRef.current.play().catch(e => {
+                console.warn("Audio play blocked by browser:", e);
+                setIsPlayingMusic(false);
+            });
+        } else {
+            audioRef.current.pause();
+        }
+    }
+  }, [isPlayingMusic, view]);
 
   // Motivational messages
   const praises = ["Xuất sắc!", "Quá đỉnh!", "Tuyệt vời!", "Chính xác!", "Giỏi quá!"];
@@ -62,6 +79,7 @@ export default function App() {
     setShowFeedback(false);
     setRelaxImg(relaxingImages[Math.floor(Math.random() * relaxingImages.length)]);
     setView("QUIZ");
+    setIsPlayingMusic(true);
   };
 
   const handleOptionClick = (originalIndex: number) => {
@@ -107,6 +125,11 @@ export default function App() {
 
   return (
     <div className="w-full min-h-screen bg-slate-100 flex flex-col font-sans overflow-hidden">
+      <audio 
+        ref={audioRef} 
+        src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Vivaldi_-_Spring_mvt_1_Allegro_-_John_Harrison_violin.ogg" 
+        loop
+      />
       {/* Header Section */}
       <header className="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center z-10 w-full shrink-0">
         <div className="flex items-center gap-4">
@@ -120,32 +143,42 @@ export default function App() {
             )}
           </div>
         </div>
-        {view !== "MENU" && (
-          <div className="flex items-center gap-6">
-             <button
-               onClick={() => setView("MENU")}
-               className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-emerald-600 transition-colors mr-2 md:mr-0"
-             >
-               <Home className="w-4 h-4" /> Bảng điều khiển
-             </button>
-             {view === "QUIZ" && currentQuestions.length > 0 && (
-               <div className="hidden md:flex items-center gap-6">
-                 <div className="text-right">
-                   <p className="text-xs text-slate-400 font-semibold uppercase">Tiến độ</p>
-                   <p className="text-sm font-bold text-slate-700">Câu {currentIdx + 1} / {currentQuestions.length}</p>
-                 </div>
-                 <div className="w-48 h-2 bg-slate-200 rounded-full overflow-hidden">
-                   <motion.div
-                     className="h-full bg-emerald-500"
-                     initial={{ width: `${(currentIdx / currentQuestions.length) * 100}%` }}
-                     animate={{ width: `${((currentIdx + 1) / currentQuestions.length) * 100}%` }}
-                     transition={{ ease: "easeInOut" }}
-                   />
-                 </div>
-               </div>
-             )}
-          </div>
-        )}
+        <div className="flex items-center gap-4 md:gap-6">
+          <button
+            onClick={() => setIsPlayingMusic(!isPlayingMusic)}
+            className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"
+            title={isPlayingMusic ? "Tắt nhạc" : "Bật nhạc"}
+          >
+            {isPlayingMusic ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
+          </button>
+          
+          {view !== "MENU" && (
+            <>
+              <button
+                onClick={() => { setView("MENU"); setIsPlayingMusic(false); }}
+                className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-emerald-600 transition-colors mr-2 md:mr-0"
+              >
+                <Home className="w-4 h-4" /> Bảng điều khiển
+              </button>
+              {view === "QUIZ" && currentQuestions.length > 0 && (
+                <div className="hidden md:flex items-center gap-6">
+                  <div className="text-right">
+                    <p className="text-xs text-slate-400 font-semibold uppercase">Tiến độ</p>
+                    <p className="text-sm font-bold text-slate-700">Câu {currentIdx + 1} / {currentQuestions.length}</p>
+                  </div>
+                  <div className="w-48 h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-emerald-500"
+                      initial={{ width: `${(currentIdx / currentQuestions.length) * 100}%` }}
+                      animate={{ width: `${((currentIdx + 1) / currentQuestions.length) * 100}%` }}
+                      transition={{ ease: "easeInOut" }}
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </header>
 
       <main className="flex-1 w-full max-w-7xl mx-auto p-4 md:p-8 flex flex-col z-10 overflow-y-auto">
