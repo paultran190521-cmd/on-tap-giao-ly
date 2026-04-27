@@ -117,9 +117,9 @@ export const lessons: Lesson[] = [
           "Sống thoải mái theo bản năng vì khi đã được Rửa Tội thì ta chắc chắn sẽ được lên thiên đàng",
           "Luôn sống trong tâm tình biết ơn, cảm tạ và hân hoan vì được làm con Chúa",
           "Sống tin tưởng, phó thác vào sự quan phòng của Cha trên trời vì xác tín rằng Ngài luôn yêu thương, gìn giữ và săn sóc ta",
-          "Tất cả các ý trên đều đúng"
+          "Câu b và c đều đúng"
         ],
-        correctAnswerIndex: 1,
+        correctAnswerIndex: 3,
         shuffleOptions: false,
       }
     ]
@@ -231,10 +231,9 @@ export const lessons: Lesson[] = [
           "Chầu Thánh Thể",
           "Kiệu Thánh Thể",
           "Viếng Chúa",
-          "Lần hạt mân Côi",
-          "Tất cả các ý trên đều đúng"
+          "Cả a, b, c đều đúng"
         ],
-        correctAnswerIndex: 4,
+        correctAnswerIndex: 3,
         shuffleOptions: false,
       },
       {
@@ -319,7 +318,7 @@ export const lessons: Lesson[] = [
           "Chuẩn bị tâm hồn trước khi tham dự Thánh lễ",
           "Tích cực và thành kính khi tham dự",
           "Thực hành lời Chúa dạy trong đời sống hàng ngày",
-          "Tất cả các ý trên đều đúng"
+          "Câu a và b đều đúng"
         ],
         correctAnswerIndex: 3,
         shuffleOptions: false,
@@ -451,7 +450,7 @@ export const lessons: Lesson[] = [
           "Mang lại cho bệnh nhân sự an ủi, bình an, lòng can đảm để đón nhận đau khổ",
           "Mang lại ơn tha tội, chuẩn bị cho bệnh nhân bước vào đời sống vĩnh hằng",
           "Đem lại ơn chữa lành nếu Thiên Chúa muốn",
-          "Tất cả các ý trên đều đúng"
+          "Câu a, b và c đều đúng"
         ],
         correctAnswerIndex: 4,
         shuffleOptions: false,
@@ -542,7 +541,7 @@ export const lessons: Lesson[] = [
           "Sự ký kết giao ước giữa 1 người nam và 1 người nữ (Hôn nhân tự nhiên)",
           "Giao ước giữa Thiên Chúa với dân của Ngài (Trong Cựu Ước)",
           "Sự kết hợp giữa Đức Ki-tô và Hội Thánh (Trong Tân Ước)",
-          "Tất cả các ý trên đều đúng"
+          "Câu a và b đều đúng"
         ],
         correctAnswerIndex: 3,
         shuffleOptions: false,
