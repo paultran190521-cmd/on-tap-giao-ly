@@ -4,6 +4,10 @@
 
 @theme {
   --font-sans: "Mulish", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-brand-bg: #104e5b;
+  --color-brand-gold: #df9317;
+  --color-brand-cyan: #1992b0;
 }
 
 @theme {
